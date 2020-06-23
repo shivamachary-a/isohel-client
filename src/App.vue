@@ -8,15 +8,6 @@
       </div>
       <div class="navbar-end">
         <p class="control" v-if="isLoggedIn">
-          <a class="button is-white myButton" @click="goToPort()">Portfolio</a>
-        </p>
-        <p class="control" v-if="isLoggedIn">
-          <a class="button is-white myButton" @click="goToDash()">Dashboard</a>
-        </p>
-        <p class="control" v-if="isLoggedIn">
-          <a class="button is-white myButton" @click="goToAnalysis()">Analysis</a>
-        </p>
-        <p class="control" v-if="isLoggedIn">
           <a class="tag is-info is-medium namelabel">{{user.name}}</a>
         </p>
         <p class="control" v-if="!isLoggedIn">
@@ -37,18 +28,7 @@ import router from '@/router';
 
 export default {
   computed: mapState('auth', ['user', 'isLoggedIn']),
-  methods: {
-    mapActions: mapActions('auth', ['login', 'logout', 'leave']),
-    goToAnalysis: function () {
-      router.push('/analysis');
-    },
-    goToDash: function () {
-      router.push('/dash');
-    },
-    goToPort: function () {
-      router.push('/port');
-    },
-  },
+  methods: mapActions('auth', ['login', 'logout', 'leave']),
 };
 </script>
 
