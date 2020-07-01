@@ -1,6 +1,3 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-
 import router from '@/router';
 
 const actions = {
@@ -13,10 +10,12 @@ const actions = {
     router.push('/analysis');
   },
   goToPort() {
+    console.log('yeeto');
     router.push('/port');
   },
 };
 
 export default {
+  namespaced: true,
   actions,
 };

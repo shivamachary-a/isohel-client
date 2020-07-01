@@ -36,7 +36,11 @@ import router from '@/router';
 
 export default {
   computed: mapState('auth', ['user', 'isLoggedIn']),
-  methods: mapActions('auth', ['login', 'logout', 'leave'], 'navigation', ['goToPort', 'goToAnalysis', 'goToDash']),
+  methods: {
+    ...mapActions('auth', ['login', 'logout', 'leave']),
+
+    ...mapActions('navigation', ['goToPort', 'goToAnalysis', 'goToDash']),
+  },
 };
 </script>
 

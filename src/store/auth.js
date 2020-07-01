@@ -16,6 +16,7 @@ const actions = {
     await firebase.auth().signOut();
   },
   leave() {
+    console.log('penis');
     router.push('/');
   },
 
