@@ -22,7 +22,7 @@
           <a class="button is-white myButton" @click="login()">Login with Google</a>
         </p>
         <p class = "control" v-if="isLoggedIn">
-          <a class="button is-danger myButton" @click="logout(); leave()">Logout</a>
+          <a class="button is-danger myButton" @click="logout(); leave();">Logout</a>
         </p>
       </div>
     </nav>
