@@ -7,6 +7,7 @@ import Home from '../views/Home.vue';
 import Dash from '../views/Dash.vue';
 import Analysis from '../views/Analysis.vue';
 import Port from '../views/Port.vue';
+import Account from '../views/Account.vue';
 
 Vue.use(VueRouter);
 
@@ -42,6 +43,11 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
+  },
+  {
+    path: '/account',
+    name: 'Account',
+    component: Account,
   },
 ];
 

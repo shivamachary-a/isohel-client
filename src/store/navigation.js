@@ -13,6 +13,10 @@ const actions = {
     console.log('yeeto');
     router.push('/port');
   },
+  goToAcc() {
+    console.log('yeeto');
+    router.push('/account');
+  },
 };
 
 export default {

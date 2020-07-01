@@ -8,6 +8,9 @@
       </div>
       <div class="navbar-end">
         <p class = "control" v-if="isLoggedIn">
+          <a class="button is-white myButton" @click="goToAcc()">Account</a>
+        </p>
+        <p class = "control" v-if="isLoggedIn">
           <a class="button is-white myButton" @click="goToPort()">Portfolio</a>
         </p>
         <p class = "control" v-if="isLoggedIn">
@@ -39,7 +42,7 @@ export default {
   methods: {
     ...mapActions('auth', ['login', 'logout', 'leave']),
 
-    ...mapActions('navigation', ['goToPort', 'goToAnalysis', 'goToDash']),
+    ...mapActions('navigation', ['goToPort', 'goToAnalysis', 'goToDash', 'goToAcc']),
   },
 };
 </script>
