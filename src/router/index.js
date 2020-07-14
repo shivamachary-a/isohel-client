@@ -8,6 +8,7 @@ import Dash from '../views/Dash.vue';
 import Analysis from '../views/Analysis.vue';
 import Port from '../views/Port.vue';
 import Account from '../views/Account.vue';
+import Yeet from '../views/Yeet.vue';
 
 Vue.use(VueRouter);
 
@@ -48,6 +49,11 @@ const routes = [
     path: '/account',
     name: 'Account',
     component: Account,
+  },
+  {
+    path: '/ping',
+    name: Yeet,
+    component: Yeet,
   },
 ];
 
