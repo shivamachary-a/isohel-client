@@ -14,9 +14,9 @@ const actions = {
   },
   async logout() {
     await firebase.auth().signOut();
+    console.log("yeet");
   },
   leave() {
-    console.log('penis');
     router.push('/');
   },
 
