@@ -14,7 +14,7 @@ const actions = {
   },
   async logout() {
     await firebase.auth().signOut();
-    console.log("yeet");
+    console.log('yeet');
   },
   leave() {
     router.push('/');

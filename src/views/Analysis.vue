@@ -1,20 +1,130 @@
 <template>
-  <section>
-    <h1 class="title">Analysis</h1>
-    <h1 class="subtitle">Enter the stock ticker:</h1>
-    <b-field label="StockTicker">
-        <b-input v-model="name"></b-input>
-    </b-field>
-    <b-field label="Exercise Price">
-        <b-input v-model="name"></b-input>
-    </b-field>
+  <div>
+    <section class="modal" v-bind:class="{ 'is-active':isActive }"
+        ref="addStockModal" id="stock-modal">
+      <div class="modal-background"></div>
+      <div class ="modal-card">
+        <div class="box">
+          <h1 class="title">Analysis</h1>
+          <h1 class="subtitle">Enter the stock ticker:</h1>
+          <b-field label="StockTicker">
+              <b-input v-model="addStockForm.Ticker"></b-input>
+          </b-field>
+          <b-field label="Exercise Price">
+              <b-input v-model="addStockForm.Price"></b-input>
+          </b-field>
+          <div class="control">
+              <a class="button" v-on:click.prevent="onSubmit()">Add</a>
+          </div>
+        </div>
+      </div>
+      <button class="modal-close is-large" aria-label="close" @click="hide()"></button>
+    </section>
+    <a class="button analysebutton" @click="show()" >Analyse with Black and Scholes</a>
     <div class="content">
-      <h1 class="is-medium">HUHH</h1>
+      <p class="is-medium">
+        Use this analysis tool if you are looking to trade options. What are options?
+        In finance, an option is a contract that gives you the right to buy or sell
+        an underlying asset
+        (this could be a stock, currency, bond
+        etc) at a certain price, known as the strike price, before or on a specific date,
+        known as the expiry date.
+        The Black and Scholes formula is one of the most famous in finance, and is used to determine
+        a fair value of an option. Essentially, if the option is priced under the value calculated
+        for the expiry date, you would buy it.
+        The formula is focused on European call options, meaning you can only exercise your
+        right to buy on a specific date.
+      </p>
+      <p class="is-medium">
+        Here's an example.
+
+        Consider you sign into an option contract at £2, with a strike price of £50 and
+        an expiry date of 1 year from now. An option contract usually includes 100 shares
+        of the underlying asset, which in this case we will
+        call 'XMPL'. You pay £200 for the right to buy 100 shares in XMPL one year from
+        now, at a price of £50 per share.  Now let's imagine one year from now,
+        the price of one share in 'XMPL' is £60. You have the right
+        to buy 100 of these shares at £50. So you buy them for a total of £5,000,
+        and then sell them at the current rate of £60 per share, meaning you now
+        have £6,000. Now after accounting for the £200 you spent
+        on the option, you made a cool £800 in profit.
+      </p>
+      <p class="is-medium">
+        Using the B+S formula, you could have predicted the value of the option
+        a year from now. If the predicted value of the option a year from now was
+        lower than the strike price, you wouldn't engage in the contract,
+        or you wouldn't exercise this right, although you'd have lost £200.
+      </p>
     </div>
-  </section>
+  </div>
 </template>
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+  data() {
+    return {
+      isActive: false,
+      stocks: [],
+      addStockForm: {
+        Ticker: '',
+        Price: '',
+      },
+    };
+  },
+  methods: {
+    getStocks() {
+      const path = 'http://localhost:5000/';
+      axios.get(path)
+      .then((res) => {
+        this.stocks = res.data.stocks;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    },
+    addStock(payload) {
+      const path = 'http://localhost:5000/';
+      axios.post(path, payload)
+      .then(() => {
+        this.getStocks();
+      })
+      .catch((error) => {
+          // eslint-disable-next-line
+          console.log(error);
+          this.getStocks();
+        });
+      console.log(payload);
+    },
+    initForm() {
+      this.addStockForm.Ticker = '';
+      this.addStockForm.Price = '';
+    },
+    onSubmit() {
+      const payload = {
+        Ticker: this.addStockForm.Ticker,
+        Price: this.addStockForm.Price,
+      };
+      this.addStock(payload);
+      this.initForm();
+      this.isActive = false;
+    },
+    show() {
+      this.isActive = true;
+    },
+    hide() {
+      this.isActive = false;
+    },
+  },
+  created() {
+    this.getStocks();
+  },
 };
 </script>
+<style scoped>
+  .analysebutton {
+
+    margin-bottom: 1em;
+
+  }
+</style>
