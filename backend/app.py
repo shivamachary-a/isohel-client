@@ -69,11 +69,12 @@ def yeet():
     put = float(euro_vanilla_put(stocks['Price'], stocks['Strike'], stocks['Time'], stocks['Interest'], stocks['Volatility']))
     
     options.append({
+      'Ticker': stocks['Ticker'],
       'Call': call,
       'Put' : put,
     })
     response_object['options'] = options
-
+    print(options)
   else:
     response_object['stocks'] = options
   return jsonify(response_object)
