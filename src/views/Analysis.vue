@@ -7,11 +7,23 @@
         <div class="box">
           <h1 class="title">Analysis</h1>
           <h1 class="subtitle">Enter the stock ticker:</h1>
-          <b-field label="StockTicker">
+          <b-field label="Stock Ticker">
               <b-input v-model="addStockForm.Ticker"></b-input>
           </b-field>
-          <b-field label="Exercise Price">
+          <b-field label="Price">
               <b-input v-model="addStockForm.Price"></b-input>
+          </b-field>
+          <b-field label="Strike Price">
+              <b-input v-model="addStockForm.Strike"></b-input>
+          </b-field>
+          <b-field label="Time to Maturity">
+              <b-input v-model="addStockForm.Time"></b-input>
+          </b-field>
+          <b-field label="Interest">
+              <b-input v-model="addStockForm.Interest"></b-input>
+          </b-field>
+          <b-field label="Volatility">
+              <b-input v-model="addStockForm.Volatility"></b-input>
           </b-field>
           <div class="control">
               <a class="button" v-on:click.prevent="onSubmit()">Add</a>
@@ -55,6 +67,8 @@
         lower than the strike price, you wouldn't engage in the contract,
         or you wouldn't exercise this right, although you'd have lost £200.
       </p>
+      <h1 class= "is-large"> Results </h1>
+      <p class = "is-large" v-if="success"> Your call option is priced at: {{ stocks.Call }}</p>
     </div>
   </div>
 </template>
@@ -64,11 +78,16 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      success: false,
       isActive: false,
       stocks: [],
       addStockForm: {
         Ticker: '',
         Price: '',
+        Strike: '',
+        Time: '',
+        Interest: '',
+        Volatility: '',
       },
     };
   },
@@ -77,7 +96,8 @@ export default {
       const path = 'http://localhost:5000/';
       axios.get(path)
       .then((res) => {
-        this.stocks = res.data.stocks;
+        this.stocks = res.data.options;
+        console.log(res.data.options);
       })
       .catch((error) => {
         console.error(error);
@@ -88,6 +108,7 @@ export default {
       axios.post(path, payload)
       .then(() => {
         this.getStocks();
+        this.success = true;
       })
       .catch((error) => {
           // eslint-disable-next-line
@@ -99,11 +120,19 @@ export default {
     initForm() {
       this.addStockForm.Ticker = '';
       this.addStockForm.Price = '';
+      this.addStockForm.Strike = '';
+      this.addStockForm.Time = '';
+      this.addStockForm.Interest = '';
+      this.addStockForm.Volatility = '';
     },
     onSubmit() {
       const payload = {
         Ticker: this.addStockForm.Ticker,
         Price: this.addStockForm.Price,
+        Strike: this.addStockForm.Strike,
+        Time: this.addStockForm.Time,
+        Interest: this.addStockForm.Interest,
+        Volatility: this.addStockForm.Volatility,
       };
       this.addStock(payload);
       this.initForm();
