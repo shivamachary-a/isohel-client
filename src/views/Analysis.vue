@@ -93,7 +93,6 @@
           </div>
         </section>
       </div>
-      </a>
     </nav>
   </div>
 </template>

@@ -52,11 +52,12 @@ def euro_vanilla_put(S, K, T, r, sigma):
   
   return put
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST']) #creating the base route for the application
 def yeet():
-  response_object = {'status': 'success'}
+  response_object = {'status': 'success'} #creating the object to send back to the frontend
   if request.method == 'POST':
-    post_data = request.get_json()
+    post_data = request.get_json() #getting the data sent from the frontend
+    #creating object holding data from post request
     stocks = {
       'Ticker': post_data.get('Ticker'),
       'Price': float(post_data.get('Price')),
@@ -78,3 +79,10 @@ def yeet():
   else:
     response_object['stocks'] = options
   return jsonify(response_object)
+
+@app.route('/volatility', methods=['GET', 'POST'])
+def volatility():
+  response_object = {'status': 'success'}
+  if request.method == 'POST':
+    post_data = request.get_json()
+    
