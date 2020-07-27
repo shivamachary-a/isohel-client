@@ -1,6 +1,8 @@
 import requests
 import json
 from datetime import date, timedelta
+import numpy as np
+
 
 
 def getAdjClose(ticker):
@@ -12,11 +14,25 @@ def getAdjClose(ticker):
   response = requests.get(url)
   parsed = json.loads(response.text)
 
+  values = []
+
   i = 0
-  while i < 10:
+  while i < 40:
     try:
       d = date.today() - timedelta(days=i)
-      print(parsed['Time Series (Daily)'][str(d)]['4. close'])
+      values.append(float(parsed['Time Series (Daily)'][str(d)]['4. close']))
       i = i + 1
     except KeyError:
       i = i + 1
+      
+  return values
+
+def stockVolatility (values):
+  return np.std(values) * np.sqrt(len(values))
+
+
+cunt = getAdjClose('MSFT')
+
+print(stockVolatility(cunt))
+
+
